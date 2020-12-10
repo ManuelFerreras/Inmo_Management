@@ -17,9 +17,9 @@
    <widget class="QComboBox" name="cb_seleccionar_cliente">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>381</width>
+      <x>20</x>
+      <y>30</y>
+      <width>371</width>
       <height>22</height>
      </rect>
     </property>
@@ -522,6 +522,9 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QDateEdit" name="dateEdit_2">
     <property name="geometry">
@@ -531,6 +534,9 @@
       <width>110</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_nombre_propietario">

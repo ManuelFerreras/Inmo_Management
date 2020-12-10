@@ -23,6 +23,9 @@ from openpyxl import load_workbook
 import os
 import pyodbc
 
+clientes = []
+PATH_DATABASE = "Database/administraciones.mdb"
+
 cambios = []
 facturas = []
 url = []
@@ -36,33 +39,56 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
         self.ui.btn_exit.clicked.connect(self.salir)
 
+        self.conectar_access()
+
+    def get_schema(self, cursor):
+        global schema
+        schema = dict()
+        tbls = cursor.tables().fetchall()
+
+        for tbl in tbls:
+            if tbl not in schema:
+                db_schema[tbl] = list()
+            column_names = list()
+            for col in cursor.columns(table=tbl):
+                column_names.append(col[3])
+            schema[tbl].append(tuple(column_names))
+
+        return schema
+
+    def get_single_table_data(self, cursor):
+        while True:
+            row = cursor.fetchone()
+            if row is None:
+                break
+            yield row
+
+    def print_all_table_data(self, cursor, schema):
+        for tbl, cols in schema.items():
+            print("1")
+            print(cols)
+            
+
 
     @Slot()
     def activar_extraer_info(self):
         thread = threading.Thread(target = self.extraer_info, daemon=True)
-        self.ui.btn_extraer_info.setDisabled(True)
+        self.ui.btn_actualizar_aguas_cordobesas.setDisabled(True)
         thread.start()
 
     @Slot()
-    def elegir_access(self):
-        root = tkinter.Tk()
-        root.withdraw() #use to hide tkinter window
-
-        global DB_PATH
-        DB_PATH = search_for_file_path(root)
-        print("1")
+    def conectar_access(self):
         global conn
-        conn = pyodbc.connect("Driver={%s};DBQ=%s;" % (DRIVER_NAME, DB_PATH))
+        conn = pyodbc.connect("Driver={%s};DBQ=%s;" % (DRIVER_NAME, PATH_DATABASE))
         global cursor
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Inquilinos")
-        print("1")
-        self.ui.btn_extraer_info.setDisabled(False)
-        self.ui.lineEdit.setDisabled(False)
-        
+        print("0")
+        for row in cursor.fetchall():
+            clientes.append(row)
+        print(clientes)
 
 
-    
 
     def extraer_info(self):
         if self.ui.lineEdit.text() != "":
