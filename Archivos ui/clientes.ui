@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>402</width>
+    <height>779</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QComboBox" name="cb_seleccionar_cliente">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>381</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Sin Selección</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="label_txt_seleccione_cliente">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Seleccione el cliente:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_id">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ID:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_id_cliente">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>86</y>
+      <width>351</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_domicilio_alquiler">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Domicilio Alquiler:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_numero_telefono">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Número de Teléfono:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_monto_alquiler">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Monto de Alquiler:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_monto_deposito_numero">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Monto Depósito Número:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_fecha_inicio_contrato">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fecha de Inicio del Contrato:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_fecha_fin_contrato">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>210</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Fecha de Fin del Contrato:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_propietario">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>230</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Propietario:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_tipo_comision">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tipo de Comisión:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_monto_comision">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Monto de Comisión:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_cuota_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>290</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cuota de Aguas Cordobesas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_importe_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>310</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Importe de Aguas Cordobesas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_porcentual_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>201</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Porcentual de Aguas Cordobesas e Imp.:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_quien_paga_aguas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quién Paga Aguas e Imp.:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_cuota_muni">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>370</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cuota de Muni:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_importe_muni">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>390</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Importe de Muni:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_quien_paga_muni">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>410</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quién Paga Muni:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_cuota_rentas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>430</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cuota de Rentas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_importe_rentas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>450</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Importe de Rentas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_quien_paga_rentas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>470</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Quién Paga Rentas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_monto_unico">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>490</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Monto Único:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_mes_expensa">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>510</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Mes Expensa:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_monto_expensa">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>530</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Monto Expensa:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_adicional_pagares">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>550</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Adicional Pagarés:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_cuenta_orden">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>570</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cuenta y Orden:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_libre">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>590</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Libre:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_codigo_catastro">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>610</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Código de Catastro:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_codigo_rentas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>630</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Código de Rentas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_codigo_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>650</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Código de Aguas Cordobesas:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_conceptos_incluidos">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>670</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Conceptos Incluidos:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_txt_paga_por_transferencia">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>690</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Paga por Transferencia:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_domicilio">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>110</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&quot;Domicilio&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_numero_de_telefono">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>130</y>
+      <width>251</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>000000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_monto_de_alquiler">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>150</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_monto_deposito_numero">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>170</y>
+      <width>251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="dateEdit">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>190</y>
+      <width>110</width>
+      <height>16</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="dateEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>210</y>
+      <width>110</width>
+      <height>16</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_nombre_propietario">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>230</y>
+      <width>311</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&quot;Nombre&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_tipo_de_comision">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>250</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Porcentaje</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_monto_de_comision">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>270</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0 %</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cuota_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>290</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_importe_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>310</y>
+      <width>211</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_porcentual_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>330</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0 %</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_quien_paga_aguas">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>350</y>
+      <width>241</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Inquilino</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cuota_muni">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>370</y>
+      <width>291</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_importe_muni">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>390</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_quien_paga_muni">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>410</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Inquilino</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cuota_rentas">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>430</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_importe_rentas">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>450</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_quien_paga_rentas">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>470</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Inquilino</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_monto_unico">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>490</y>
+      <width>301</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_mes_expensa">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>510</y>
+      <width>301</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_monto_expensa">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>530</y>
+      <width>291</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_adicional_pagares">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>550</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>$ 0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cuenta_orden">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>570</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>No</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_libre">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>590</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&quot;Libre&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_codigo_catastro">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>610</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>000000000000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_codigo_rentas">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>630</y>
+      <width>281</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>000000000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_codigo_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>650</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_conceptos_incluidos">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>670</y>
+      <width>271</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&quot;Conceptos&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_paga_por_transferencia">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>690</y>
+      <width>251</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>No</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_actualizar_aguas_cordobesas">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>720</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Actualizar Aguas Cordobesas</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_exit">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>720</y>
+      <width>75</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: red;
+color: white;
+font: 75 10pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Salir</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
