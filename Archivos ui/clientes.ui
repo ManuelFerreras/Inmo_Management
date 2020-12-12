@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>811</height>
+    <height>858</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -856,19 +856,19 @@
      <rect>
       <x>20</x>
       <y>720</y>
-      <width>151</width>
+      <width>261</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Actualizar Aguas Cordobesas</string>
+     <string>Actualizar Aguas Cordobesas al Cliente Actual</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_exit">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>720</y>
+      <x>310</x>
+      <y>760</y>
       <width>75</width>
       <height>31</height>
      </rect>
@@ -887,12 +887,38 @@ font: 75 10pt &quot;Arial&quot;;</string>
      <rect>
       <x>20</x>
       <y>760</y>
-      <width>151</width>
-      <height>20</height>
+      <width>261</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="placeholderText">
      <string>Periodo a Buscar</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_editar_cliente">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>720</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Editar Cliente</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_actualizar_agua_todos">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>800</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Actualizar Aguas Cordobesas a Todos los Clientes</string>
     </property>
    </widget>
   </widget>

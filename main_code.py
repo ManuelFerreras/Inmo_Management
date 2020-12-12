@@ -9,6 +9,7 @@ import os
 
 
 from clientes_interface import Ui_MainWindow
+from editar_clientes_interface import Ui_Dialog
 
 from time import sleep
 from selenium import webdriver
@@ -23,6 +24,8 @@ from openpyxl import load_workbook
 import os
 import pyodbc
 
+index_seleccionado = 0
+
 clientes = []
 PATH_DATABASE = "Database/administraciones.mdb"
 
@@ -32,6 +35,113 @@ url = []
 
 DRIVER_NAME = "Microsoft Access Driver (*.mdb)"
 
+class Dialog(QDialog, Ui_Dialog):
+    def __init__(self, parent=None):
+        super(Dialog, self).__init__()
+        self.ui = Ui_Dialog()
+        self.setupUi(self)
+
+        self.btn_exit.clicked.connect(self.salir)
+        self.btn_volver.clicked.connect(self.volver_sin_guardar)
+        # self.btn_aplicar.clicked.connect(self.aplicar)
+        self.cb_seleccionar_cliente.currentIndexChanged.connect(self.cambiar_seleccion)
+
+        self.de_inicio_contrato.setDate(clientes[1][6])
+        self.de_final_contrato.setDate(clientes[1][6])
+
+        self.cb_seleccionar_cliente.model().item(0).setEnabled(False)
+        self.cargar_clientes()
+        
+
+    def cargar_clientes(self):
+        for i in range(len(clientes)):
+            self.cb_seleccionar_cliente.addItem(clientes[i][1])
+
+    def actualizar_data(self):
+        self.le_id.setText(str(clientes[index_seleccionado][0]))
+        self.le_domicilio_alquiler.setText(str(clientes[index_seleccionado][2]))
+        self.le_numero_telefono.setText(str(clientes[index_seleccionado][3]))
+        self.le_monto_alquiler.setText("$ " + str(clientes[index_seleccionado][4]))
+        self.le_monto_deposito_numero.setText(str(clientes[index_seleccionado][5]))
+        self.de_inicio_contrato.setDate(clientes[index_seleccionado][6])
+        self.de_final_contrato.setDate(clientes[index_seleccionado][7])
+        self.le_propietario.setText(str(clientes[index_seleccionado][8]))
+        self.le_tipo_comision.setText(str(clientes[index_seleccionado][9]))
+        self.le_monto_comision.setText(str(clientes[index_seleccionado][10]) + " %")
+        self.le_cuota_aguas.setText(str(clientes[index_seleccionado][11]))
+        self.le_importe_aguas.setText("$ " + str(clientes[index_seleccionado][12]))
+        self.le_porcentual_aguas.setText(str(clientes[index_seleccionado][13]) + " %")
+        self.le_quien_paga_aguas.setText(str(clientes[index_seleccionado][14]))
+        self.le_cuota_de_muni.setText(str(clientes[index_seleccionado][15]))
+        self.le_importe_muni.setText("$ " + str(clientes[index_seleccionado][16]))
+        self.le_quien_paga_muni.setText(str(clientes[index_seleccionado][17]))
+        self.le_cuota_rentas.setText(str(clientes[index_seleccionado][18]))
+        self.le_importe_rentas.setText("$ " + str(clientes[index_seleccionado][19]))
+        self.le_quien_paga_rentas.setText(str(clientes[index_seleccionado][20]))
+        self.le_monto_unico.setText("$ " + str(clientes[index_seleccionado][21]))
+        self.le_mes_expensa.setText(str(clientes[index_seleccionado][22]))
+        self.le_monto_expensa.setText("$ " + str(clientes[index_seleccionado][23]))
+        self.le_adicional_pagares.setText("$ " + str(clientes[index_seleccionado][24]))
+        self.checkBox_2.setChecked(clientes[index_seleccionado][25])
+        self.le_libre.setText(str(clientes[index_seleccionado][26]))
+        self.le_codigo_catastro.setText(str(clientes[index_seleccionado][27]))
+        self.le_codigo_rentas.setText(str(clientes[index_seleccionado][28]))
+        self.le_codigo_aguas.setText(str(clientes[index_seleccionado][29]))
+        self.le_conceptos_incluidos.setText(str(clientes[index_seleccionado][30]))
+        self.checkBox.setChecked(clientes[index_seleccionado][31])
+        self.le_url_aguas.setText(str(clientes[index_seleccionado][32]))
+
+    def resetear_campos(self):
+        self.le_id.setText("")
+        self.le_domicilio_alquiler.setText("")
+        self.le_numero_telefono.setText("")
+        self.le_monto_alquiler.setText("")
+        self.le_monto_deposito_numero.setText("")
+        self.le_propietario.setText("")
+        self.le_tipo_comision.setText("")
+        self.le_monto_comision.setText("")
+        self.le_cuota_aguas.setText("")
+        self.le_importe_aguas.setText("")
+        self.le_porcentual_aguas.setText("")
+        self.le_quien_paga_aguas.setText("")
+        self.le_cuota_de_muni.setText("")
+        self.le_importe_muni.setText("")
+        self.le_quien_paga_muni.setText("")
+        self.le_cuota_rentas.setText("")
+        self.le_importe_rentas.setText("")
+        self.le_quien_paga_rentas.setText("")
+        self.le_monto_unico.setText("")
+        self.le_mes_expensa.setText("")
+        self.le_monto_expensa.setText("")
+        self.le_adicional_pagares.setText("")
+        self.le_libre.setText("")
+        self.le_codigo_catastro.setText("")
+        self.le_codigo_rentas.setText("")
+        self.le_codigo_aguas.setText("")
+        self.le_conceptos_incluidos.setText("")
+        self.de_inicio_contrato.setDate(clientes[1][6])
+        self.de_final_contrato.setDate(clientes[1][6])
+        self.checkBox.setChecked(False)
+        self.checkBox_2.setChecked(False)
+        self.le_url_aguas.setText("")
+
+    @Slot()
+    def cambiar_seleccion(self):
+        global index_seleccionado
+        index_seleccionado = self.cb_seleccionar_cliente.currentIndex() - 1
+        print(index_seleccionado)
+        self.actualizar_data()
+
+    @Slot()
+    def volver_sin_guardar(self):
+        dialog.hide()
+        self.resetear_campos()
+        window.show()
+
+    @Slot()
+    def salir(self):
+        sys.exit(app.exec_())
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -40,12 +150,20 @@ class MainWindow(QMainWindow):
         self.ui.btn_exit.clicked.connect(self.salir)
         self.ui.cb_seleccionar_cliente.currentIndexChanged.connect(self.cambiar_seleccion)
         self.ui.btn_actualizar_aguas_cordobesas.clicked.connect(self.activar_extraer_info)
+        self.ui.btn_actualizar_agua_todos.clicked.connect(self.actualizar_aguas_de_todos)
+        self.ui.btn_editar_cliente.clicked.connect(self.abrir_editar)
 
         self.ui.cb_seleccionar_cliente.model().item(0).setEnabled(False)
 
         self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
-        self.ui.le_periodo_a_buscar.setEnabled(False)
-        self.conectar_access()           
+        self.conectar_access()       
+
+    @Slot()
+    def abrir_editar(self):
+        window.hide()
+        dialog.show()
+        dialog.cb_seleccionar_cliente.setCurrentIndex(self.ui.cb_seleccionar_cliente.currentIndex())
+        dialog.actualizar_data()
 
     @Slot()
     def cambiar_seleccion(self):
@@ -99,16 +217,13 @@ class MainWindow(QMainWindow):
             self.ui.label_paga_por_transferencia.setText("Si")
 
         if clientes[index_seleccionado][11] != None and clientes[index_seleccionado][32] != None:
-            self.ui.le_periodo_a_buscar.setEnabled(True)
             self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
         else:
-            self.ui.le_periodo_a_buscar.setEnabled(False)
             self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
-        
 
     @Slot()
     def activar_extraer_info(self):
-        thread = threading.Thread(target = self.extraer_info, daemon=True)
+        thread = threading.Thread(target = self.extraer_info_un_cliente, daemon=True)
         thread.start()
 
     @Slot()
@@ -128,11 +243,10 @@ class MainWindow(QMainWindow):
 
 
 
-    def extraer_info(self):
+    def extraer_info_un_cliente(self):
         if self.ui.le_periodo_a_buscar.text() != "":
-
-            print("inicio")
             self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
+            self.ui.btn_actualizar_agua_todos.setEnabled(False)
             self.ui.le_periodo_a_buscar.setEnabled(False)
              
             periodo_deseado = int(self.ui.le_periodo_a_buscar.text())
@@ -178,78 +292,62 @@ class MainWindow(QMainWindow):
 
             self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
             self.ui.le_periodo_a_buscar.setEnabled(True)
+            self.ui.btn_actualizar_agua_todos.setEnabled(True)
 
-
-        
-        
     @Slot()
-    def look_for_url(self):
-        if self.ui.lineEdit_2.text() != "":
-            self.ui.lineEdit_2.setText("")
+    def actualizar_aguas_de_todos(self):
+        if self.ui.le_periodo_a_buscar.text() != "":
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
+            self.ui.btn_actualizar_agua_todos.setEnabled(False)
+            self.ui.le_periodo_a_buscar.setEnabled(False)
 
-            urls = []
-        
-            with open('urls.txt') as json_file:
-                urls = json.load(json_file)
-                
+            periodo_deseado = int(self.ui.le_periodo_a_buscar.text())
             driver = webdriver.Chrome()
-            codigo = self.ui.lineEdit_2.text()
+            i = -1
+            for row in clientes:
+                i = i + 1
+                if row[11] != None and row[32] != None:
+                    url = row[32]
 
-            driver.get('https://www.aguascordobesas.com.ar/espacioClientes/')
+                    try:
+                        driver.get(url)
 
-            sleep(2)
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="sUf"]')))   # Espera hasta que se cargue almenos un boton de copiar aviso en la pagina.
+                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="tbl-detalleDeuda"]/tbody[2]')))
+                        text = driver.find_element_by_xpath('//*[@id="tbl-detalleDeuda"]/tbody[2]').text
+                        codigo = driver.find_element_by_xpath('//*[@id="sUf"]').text
+                        
+                        text = text.split()
 
-            driver.find_element_by_xpath('//*[@id="modal-impactoEspacioClientes"]/div/div/div/button').click()
-            driver.find_element_by_xpath('//*[@id="consulta-deuda"]').click()
+                        while len(text) > 10:
+                            comprobacion = text[1].split('/')
+                            if int(comprobacion[0]) == periodo_deseado:
+                                break
+                            del text[0:10]
+                        
+                            
+                        text[8] = text[8].replace(",", ".")
 
-            sleep(2)
+                        print(text)
 
-            pyautogui.click(221, 636) # Unidad de facturacion
-            pyautogui.typewrite(codigo, interval=0.1)
+                        periodo = text[1].split('/')
 
-            element = WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.XPATH, '//*[@id="frmInitConsultaDeuda"]/div')))
+                        clientes[i][12] = text[8]
+                        clientes[i][11] = periodo[0]
+                        cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", text[8], periodo[0], url)
+                        self.actualizar_data()
+                        conn.commit()
 
-            urls.append(driver.current_url)
-            print(driver.current_url)
-
-            with open('urls.txt', 'w') as f:
-                json.dump(urls, f)
+                    except:
+                        print('Error con el cliente')
+                        cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", "0", periodo_deseado, url)
 
             driver.close()
+            print("Se ha completado la actualizacion")
 
-	
-    @Slot()
-    def actualizar_clientes(self):
-        new_inquilinos = []
-        inquilinos2 = []
-
-        FILE_PATH = 'inquilinos2.xlsx'
-        SHEET = 'consulta BD'
-
-        workbook = load_workbook(FILE_PATH, read_only=True)
-        sheet = workbook[SHEET]
-
-        for row in sheet.iter_rows(min_row=2):
-                if row[13].value != None:
-                        inquilinos2.append(row[1].value)
-
-        inquilinos1 = []
-
-        FILE_PATH2 = 'inquilinos.xlsx'
-        SHEET2 = 'Copia_de_Inquilinos'
-
-        workbook2 = load_workbook(FILE_PATH2, read_only=False)
-        sheet2 = workbook2[SHEET2]
-
-        for row in sheet.iter_rows(min_row=2):
-                if row[13].value != None:
-                        inquilinos1.append(row[1].value)
-
-        for i in range(len(inquilinos2)):
-                if not inquilinos2[i] in inquilinos1:
-                        new_inquilinos.append(inquilinos2[i])
-
-        print(new_inquilinos)
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
+            self.ui.le_periodo_a_buscar.setEnabled(True)
+            self.ui.btn_actualizar_agua_todos.setEnabled(True)
 
     @Slot()
     def salir(self):
@@ -269,6 +367,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     window = MainWindow()
+    dialog = Dialog()
     window.show()
 
     sys.exit(app.exec_())
