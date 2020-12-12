@@ -862,6 +862,29 @@ font: 75 10pt &quot;Arial&quot;;</string>
     <string>URL de Aguas Cordobesas:</string>
    </property>
   </widget>
+  <widget class="QLineEdit" name="le_nombre">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>100</y>
+     <width>321</width>
+     <height>16</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_txt_nombre">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nombre:</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

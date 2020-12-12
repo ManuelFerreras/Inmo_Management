@@ -240,6 +240,12 @@ class Ui_Dialog(object):
         self.label_txt_url_aguas_cordobesas = QLabel(Dialog)
         self.label_txt_url_aguas_cordobesas.setObjectName(u"label_txt_url_aguas_cordobesas")
         self.label_txt_url_aguas_cordobesas.setGeometry(QRect(10, 740, 151, 16))
+        self.le_nombre = QLineEdit(Dialog)
+        self.le_nombre.setObjectName(u"le_nombre")
+        self.le_nombre.setGeometry(QRect(60, 100, 321, 16))
+        self.label_txt_nombre = QLabel(Dialog)
+        self.label_txt_nombre.setObjectName(u"label_txt_nombre")
+        self.label_txt_nombre.setGeometry(QRect(10, 100, 47, 13))
 
         self.retranslateUi(Dialog)
 
@@ -290,5 +296,6 @@ class Ui_Dialog(object):
         self.checkBox.setText("")
         self.checkBox_2.setText("")
         self.label_txt_url_aguas_cordobesas.setText(QCoreApplication.translate("Dialog", u"URL de Aguas Cordobesas:", None))
+        self.label_txt_nombre.setText(QCoreApplication.translate("Dialog", u"Nombre:", None))
     # retranslateUi
 

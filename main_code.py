@@ -43,7 +43,7 @@ class Dialog(QDialog, Ui_Dialog):
 
         self.btn_exit.clicked.connect(self.salir)
         self.btn_volver.clicked.connect(self.volver_sin_guardar)
-        # self.btn_aplicar.clicked.connect(self.aplicar)
+        self.btn_aplicar.clicked.connect(self.aplicar)
         self.cb_seleccionar_cliente.currentIndexChanged.connect(self.cambiar_seleccion)
 
         self.de_inicio_contrato.setDate(clientes[1][6])
@@ -51,6 +51,12 @@ class Dialog(QDialog, Ui_Dialog):
 
         self.cb_seleccionar_cliente.model().item(0).setEnabled(False)
         self.cargar_clientes()
+
+    def mostrar_dialog(self, mensaje):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText(mensaje)
+        msg.setStandardButtons(QMessageBox.Ok)
         
 
     def cargar_clientes(self):
@@ -58,6 +64,7 @@ class Dialog(QDialog, Ui_Dialog):
             self.cb_seleccionar_cliente.addItem(clientes[i][1])
 
     def actualizar_data(self):
+        self.le_nombre.setText(str(clientes[index_seleccionado][1]))
         self.le_id.setText(str(clientes[index_seleccionado][0]))
         self.le_domicilio_alquiler.setText(str(clientes[index_seleccionado][2]))
         self.le_numero_telefono.setText(str(clientes[index_seleccionado][3]))
@@ -92,6 +99,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.le_url_aguas.setText(str(clientes[index_seleccionado][32]))
 
     def resetear_campos(self):
+        self.le_nombre.setText("")
         self.le_id.setText("")
         self.le_domicilio_alquiler.setText("")
         self.le_numero_telefono.setText("")
@@ -124,6 +132,43 @@ class Dialog(QDialog, Ui_Dialog):
         self.checkBox.setChecked(False)
         self.checkBox_2.setChecked(False)
         self.le_url_aguas.setText("")
+
+    @Slot()
+    def aplicar(self):
+        clientes[index_seleccionado][0] = self.le_id.text()
+        clientes[index_seleccionado][1] = self.le_nombre.text()
+        clientes[index_seleccionado][2] = self.le_domicilio_alquiler.text()
+        clientes[index_seleccionado][3] = self.le_numero_telefono.text()
+        clientes[index_seleccionado][4] = self.le_monto_alquiler.text().replace('$ ', '')
+        clientes[index_seleccionado][5] = self.le_monto_deposito_numero.text()
+        clientes[index_seleccionado][6] = self.de_inicio_contrato.date()
+        clientes[index_seleccionado][7] = self.de_final_contrato.date()
+        clientes[index_seleccionado][8] = self.le_propietario.text()
+        clientes[index_seleccionado][9] = self.le_tipo_comision.text()
+        clientes[index_seleccionado][10] = self.le_monto_comision.text().replace(' %', '')
+        clientes[index_seleccionado][11] = self.le_cuota_aguas.text()
+        clientes[index_seleccionado][12] = self.le_importe_aguas.text().replace('$ ', '')
+        clientes[index_seleccionado][13] = self.le_porcentual_aguas.text().replace(' %', '')
+        clientes[index_seleccionado][14] = self.le_quien_paga_aguas.text()
+        clientes[index_seleccionado][15] = self.le_cuota_de_muni.text()
+        clientes[index_seleccionado][16] = self.le_importe_muni.text().replace('$ ', '')
+        clientes[index_seleccionado][17] = self.le_quien_paga_muni.text()
+        clientes[index_seleccionado][18] = self.le_cuota_rentas.text()
+        clientes[index_seleccionado][19] = self.le_importe_rentas.text().replace('$ ', '')
+        clientes[index_seleccionado][20] = self.le_quien_paga_rentas.text()
+        clientes[index_seleccionado][21] = self.le_monto_unico.text().replace('$ ', '')
+        clientes[index_seleccionado][22] = self.le_mes_expensa.text()
+        clientes[index_seleccionado][23] = self.le_monto_expensa.text().replace('$ ', '')
+        clientes[index_seleccionado][24] = self.le_adicional_pagares.text().replace('$ ', '')
+        clientes[index_seleccionado][25] = self.checkBox_2.isChecked()
+        clientes[index_seleccionado][26] = self.le_libre.text()
+        clientes[index_seleccionado][27] = self.le_codigo_catastro.text()
+        clientes[index_seleccionado][28] = self.le_codigo_rentas.text()
+        clientes[index_seleccionado][29] = self.le_codigo_aguas.text()
+        clientes[index_seleccionado][30] = self.le_conceptos_incluidos.text()
+        clientes[index_seleccionado][31] = self.checkBox.isChecked()
+        clientes[index_seleccionado][32] = self.le_url_aguas.text()
+
 
     @Slot()
     def cambiar_seleccion(self):
