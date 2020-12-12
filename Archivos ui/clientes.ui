@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>779</height>
+    <height>811</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -880,6 +880,19 @@ font: 75 10pt &quot;Arial&quot;;</string>
     </property>
     <property name="text">
      <string>Salir</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="le_periodo_a_buscar">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>760</y>
+      <width>151</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Periodo a Buscar</string>
     </property>
    </widget>
   </widget>

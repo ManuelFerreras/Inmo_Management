@@ -17,13 +17,13 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(402, 779)
+        MainWindow.resize(402, 811)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.cb_seleccionar_cliente = QComboBox(self.centralwidget)
         self.cb_seleccionar_cliente.addItem("")
         self.cb_seleccionar_cliente.setObjectName(u"cb_seleccionar_cliente")
-        self.cb_seleccionar_cliente.setGeometry(QRect(10, 40, 381, 22))
+        self.cb_seleccionar_cliente.setGeometry(QRect(20, 30, 371, 22))
         self.label_txt_seleccione_cliente = QLabel(self.centralwidget)
         self.label_txt_seleccione_cliente.setObjectName(u"label_txt_seleccione_cliente")
         self.label_txt_seleccione_cliente.setGeometry(QRect(20, 10, 131, 16))
@@ -225,6 +225,9 @@ class Ui_MainWindow(object):
         self.btn_exit.setStyleSheet(u"background-color: red;\n"
 "color: white;\n"
 "font: 75 10pt \"Arial\";")
+        self.le_periodo_a_buscar = QLineEdit(self.centralwidget)
+        self.le_periodo_a_buscar.setObjectName(u"le_periodo_a_buscar")
+        self.le_periodo_a_buscar.setGeometry(QRect(20, 760, 151, 20))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -302,5 +305,6 @@ class Ui_MainWindow(object):
         self.label_paga_por_transferencia.setText(QCoreApplication.translate("MainWindow", u"No", None))
         self.btn_actualizar_aguas_cordobesas.setText(QCoreApplication.translate("MainWindow", u"Actualizar Aguas Cordobesas", None))
         self.btn_exit.setText(QCoreApplication.translate("MainWindow", u"Salir", None))
+        self.le_periodo_a_buscar.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Periodo a Buscar", None))
     # retranslateUi
 

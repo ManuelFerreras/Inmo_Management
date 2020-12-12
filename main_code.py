@@ -38,42 +38,77 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.btn_exit.clicked.connect(self.salir)
+        self.ui.cb_seleccionar_cliente.currentIndexChanged.connect(self.cambiar_seleccion)
+        self.ui.btn_actualizar_aguas_cordobesas.clicked.connect(self.activar_extraer_info)
 
-        self.conectar_access()
+        self.ui.cb_seleccionar_cliente.model().item(0).setEnabled(False)
 
-    def get_schema(self, cursor):
-        global schema
-        schema = dict()
-        tbls = cursor.tables().fetchall()
+        self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
+        self.ui.le_periodo_a_buscar.setEnabled(False)
+        self.conectar_access()           
 
-        for tbl in tbls:
-            if tbl not in schema:
-                db_schema[tbl] = list()
-            column_names = list()
-            for col in cursor.columns(table=tbl):
-                column_names.append(col[3])
-            schema[tbl].append(tuple(column_names))
+    @Slot()
+    def cambiar_seleccion(self):
+        self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
+        self.ui.le_periodo_a_buscar.setEnabled(True)
+        global index_seleccionado
+        index_seleccionado = self.ui.cb_seleccionar_cliente.currentIndex() - 1
+        print(index_seleccionado)
+        self.actualizar_data()
 
-        return schema
+    def actualizar_data(self):
+        self.ui.label_id_cliente.setText(str(clientes[index_seleccionado][0]))
+        self.ui.label_domicilio.setText(str(clientes[index_seleccionado][2]))
+        self.ui.label_numero_de_telefono.setText(str(clientes[index_seleccionado][3]))
+        self.ui.label_monto_de_alquiler.setText("$ " + str(clientes[index_seleccionado][4]))
+        self.ui.label_monto_deposito_numero.setText(str(clientes[index_seleccionado][5]))
+        self.ui.dateEdit.setDate(clientes[index_seleccionado][6])
+        self.ui.dateEdit_2.setDate(clientes[index_seleccionado][7])
+        self.ui.label_nombre_propietario.setText(str(clientes[index_seleccionado][8]))
+        self.ui.label_tipo_de_comision.setText(str(clientes[index_seleccionado][9]))
+        self.ui.label_monto_de_comision.setText(str(clientes[index_seleccionado][10]) + " %")
+        self.ui.label_cuota_aguas_cordobesas.setText(str(clientes[index_seleccionado][11]))
+        self.ui.label_importe_aguas_cordobesas.setText("$ " + str(clientes[index_seleccionado][12]))
+        self.ui.label_porcentual_aguas_cordobesas.setText(str(clientes[index_seleccionado][13]) + " %")
+        self.ui.label_quien_paga_aguas.setText(str(clientes[index_seleccionado][14]))
+        self.ui.label_cuota_muni.setText(str(clientes[index_seleccionado][15]))
+        self.ui.label_importe_muni.setText("$ " + str(clientes[index_seleccionado][16]))
+        self.ui.label_quien_paga_muni.setText(str(clientes[index_seleccionado][17]))
+        self.ui.label_cuota_rentas.setText(str(clientes[index_seleccionado][18]))
+        self.ui.label_importe_rentas.setText("$ " + str(clientes[index_seleccionado][19]))
+        self.ui.label_quien_paga_rentas.setText(str(clientes[index_seleccionado][20]))
+        self.ui.label_monto_unico.setText("$ " + str(clientes[index_seleccionado][21]))
+        self.ui.label_mes_expensa.setText(str(clientes[index_seleccionado][22]))
+        self.ui.label_monto_expensa.setText("$ " + str(clientes[index_seleccionado][23]))
+        self.ui.label_adicional_pagares.setText("$ " + str(clientes[index_seleccionado][24]))
 
-    def get_single_table_data(self, cursor):
-        while True:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            yield row
+        if clientes[index_seleccionado][25] == False:
+            self.ui.label_cuenta_orden.setText("No")
+        else:
+            self.ui.label_cuenta_orden.setText("Si")
 
-    def print_all_table_data(self, cursor, schema):
-        for tbl, cols in schema.items():
-            print("1")
-            print(cols)
-            
+        self.ui.label_libre.setText(str(clientes[index_seleccionado][26]))
+        self.ui.label_codigo_catastro.setText(str(clientes[index_seleccionado][27]))
+        self.ui.label_codigo_rentas.setText(str(clientes[index_seleccionado][28]))
+        self.ui.label_codigo_aguas_cordobesas.setText(str(clientes[index_seleccionado][29]))
+        self.ui.label_conceptos_incluidos.setText(str(clientes[index_seleccionado][30]))
 
+        if clientes[index_seleccionado][31] == False:
+            self.ui.label_paga_por_transferencia.setText("No")
+        else:
+            self.ui.label_paga_por_transferencia.setText("Si")
+
+        if clientes[index_seleccionado][11] != None and clientes[index_seleccionado][32] != None:
+            self.ui.le_periodo_a_buscar.setEnabled(True)
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
+        else:
+            self.ui.le_periodo_a_buscar.setEnabled(False)
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
+        
 
     @Slot()
     def activar_extraer_info(self):
         thread = threading.Thread(target = self.extraer_info, daemon=True)
-        self.ui.btn_actualizar_aguas_cordobesas.setDisabled(True)
         thread.start()
 
     @Slot()
@@ -83,55 +118,66 @@ class MainWindow(QMainWindow):
         global cursor
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM Inquilinos")
-        print("0")
         for row in cursor.fetchall():
             clientes.append(row)
-        print(clientes)
+        for i in range(len(clientes)):
+            self.ui.cb_seleccionar_cliente.addItem(clientes[i][1])
+            print(clientes[i])
+            print("\n")
+        
 
 
 
     def extraer_info(self):
-        if self.ui.lineEdit.text() != "":
-            periodo_deseado = int(self.ui.lineEdit.text())
+        if self.ui.le_periodo_a_buscar.text() != "":
+
+            print("inicio")
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(False)
+            self.ui.le_periodo_a_buscar.setEnabled(False)
+             
+            periodo_deseado = int(self.ui.le_periodo_a_buscar.text())
             driver = webdriver.Chrome()
 
-            for row in cursor.fetchall():
-                try:
-                    if row[11] != None and row[31] != None:
-                        url = row[31]
-                        print(row[11])
-                        driver.get(url)
+            global index_seleccionado
+            try:
+                    url = clientes[index_seleccionado][32]
+                    print(url)
+                    driver.get(url)
 
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="sUf"]')))   # Espera hasta que se cargue almenos un boton de copiar aviso en la pagina.
-                        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="tbl-detalleDeuda"]/tbody[2]')))
-                        text = driver.find_element_by_xpath('//*[@id="tbl-detalleDeuda"]/tbody[2]').text
-                        codigo = driver.find_element_by_xpath('//*[@id="sUf"]').text
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="sUf"]')))   # Espera hasta que se cargue almenos un boton de copiar aviso en la pagina.
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="tbl-detalleDeuda"]/tbody[2]')))
+                    text = driver.find_element_by_xpath('//*[@id="tbl-detalleDeuda"]/tbody[2]').text
+                    codigo = driver.find_element_by_xpath('//*[@id="sUf"]').text
+                    
+                    text = text.split()
+
+                    while len(text) > 10:
+                        comprobacion = text[1].split('/')
+                        if int(comprobacion[0]) == periodo_deseado:
+                            break
+                        del text[0:10]
+                    
                         
-                        text = text.split()
+                    text[8] = text[8].replace(",", ".")
 
-                        while len(text) > 10:
-                            comprobacion = text[1].split('/')
-                            if int(comprobacion[0]) == periodo_deseado:
-                                break
-                            del text[0:10]
-                        
-                            
-                        text[8] = text[8].replace(",", ".")
+                    print(text)
 
-                        print(text)
+                    periodo = text[1].split('/')
 
-                        periodo = text[1].split('/')
-                        cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", text[8], periodo[0], url)
-                        print("Modificado")
-                        conn.commit()
-                except:
-                    print('Error con el cliente')
-                    cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", "0", periodo_deseado, url)
+                    clientes[index_seleccionado][12] = text[8]
+                    clientes[index_seleccionado][11] = periodo[0]
+                    cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", text[8], periodo[0], url)
+                    print("Modificado")
+                    conn.commit()
+                    self.actualizar_data()
+            except:
+                print('Error con el cliente')
+                cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", "0", periodo_deseado, url)
 
             driver.close()
-            print("Se ha completado la actualizacion")
 
-            self.ui.btn_extraer_info.setDisabled(False)
+            self.ui.btn_actualizar_aguas_cordobesas.setEnabled(True)
+            self.ui.le_periodo_a_buscar.setEnabled(True)
 
 
         
