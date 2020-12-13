@@ -2,6 +2,9 @@ import sys
 from PySide2.QtWidgets import QApplication, QMainWindow, QDialog
 from PySide2.QtCore import Slot
 import threading
+from PySide2.QtWidgets import QMessageBox
+import datetime
+
 
 import tkinter
 from tkinter import filedialog
@@ -42,8 +45,9 @@ class Dialog(QDialog, Ui_Dialog):
         self.setupUi(self)
 
         self.btn_exit.clicked.connect(self.salir)
-        self.btn_volver.clicked.connect(self.volver_sin_guardar)
+        self.btn_volver.clicked.connect(self.volver)
         self.btn_aplicar.clicked.connect(self.aplicar)
+        self.btn_aplicar_volver.clicked.connect(self.aplicar_volver)
         self.cb_seleccionar_cliente.currentIndexChanged.connect(self.cambiar_seleccion)
 
         self.de_inicio_contrato.setDate(clientes[1][6])
@@ -52,11 +56,23 @@ class Dialog(QDialog, Ui_Dialog):
         self.cb_seleccionar_cliente.model().item(0).setEnabled(False)
         self.cargar_clientes()
 
-    def mostrar_dialog(self, mensaje):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setText(mensaje)
-        msg.setStandardButtons(QMessageBox.Ok)
+    def mostrar_dialog(self, mensaje, titulo):
+        msg = QMessageBox.about(self, titulo, mensaje)
+
+    def actualizar_nombres_clientes(self):
+        global index_seleccionado
+
+        index_temp = index_seleccionado
+
+        self.cb_seleccionar_cliente.clear()
+        self.cb_seleccionar_cliente.addItem("Sin Seleccion")
+        self.cb_seleccionar_cliente.model().item(0).setEnabled(False)
+
+        for i in range(len(clientes)):
+            self.cb_seleccionar_cliente.addItem(clientes[i][1])
+
+        self.cb_seleccionar_cliente.setCurrentIndex(index_temp + 1)
+        index_seleccionado = index_temp
         
 
     def cargar_clientes(self):
@@ -99,6 +115,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.le_url_aguas.setText(str(clientes[index_seleccionado][32]))
 
     def resetear_campos(self):
+        self.cb_seleccionar_cliente.setCurrentIndex(0)
         self.le_nombre.setText("")
         self.le_id.setText("")
         self.le_domicilio_alquiler.setText("")
@@ -134,7 +151,20 @@ class Dialog(QDialog, Ui_Dialog):
         self.le_url_aguas.setText("")
 
     @Slot()
+    def volver(self):
+        self.volver_sin_guardar(self.cb_seleccionar_cliente.currentIndex() - 1)
+
+    @Slot()
+    def aplicar_volver(self, index):
+        global index_seleccionado
+
+        self.aplicar()
+        self.volver_sin_guardar(self.cb_seleccionar_cliente.currentIndex() - 1)
+
+    @Slot()
     def aplicar(self):
+        nombre_viejo = clientes[index_seleccionado][1]
+
         clientes[index_seleccionado][0] = self.le_id.text()
         clientes[index_seleccionado][1] = self.le_nombre.text()
         clientes[index_seleccionado][2] = self.le_domicilio_alquiler.text()
@@ -169,6 +199,19 @@ class Dialog(QDialog, Ui_Dialog):
         clientes[index_seleccionado][31] = self.checkBox.isChecked()
         clientes[index_seleccionado][32] = self.le_url_aguas.text()
 
+        fecha_inicio = datetime.datetime(clientes[index_seleccionado][6].year(), clientes[index_seleccionado][6].month(), clientes[index_seleccionado][6].day())
+        fecha_final = datetime.datetime(clientes[index_seleccionado][7].year(), clientes[index_seleccionado][7].month(), clientes[index_seleccionado][7].day())
+
+        cursor.execute("UPDATE [Inquilinos] SET [Inquilino] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][1], nombre_viejo)
+
+
+        #cursor.execute("UPDATE [Inquilinos] SET ([Inquilino_id] = ?, [Inquilino] = ?, [Domicilio_alquiler] = ?, [Numero_telefono], [Monto_Alquiler] = ?, [Monto_deposito_numero] = ?, [Fecha_inicio_contrato] = ?, [Fecha_fin_contrato] = ?, [Propietario] = ?, [Tipo_comision] = ?, [Monto_comision] = ?, [Aguas_cuota] = ?, [Aguas_Importe] = ?, [Porcentual_agua_e_imp] = ?, [Quien_paga_Agua] = ?, [Muni_Cuota] = ?, [Muni_Importe] = ?, [Quien_paga_Muni] = ?, [Rentas_cuota] = ?, [Rentas_Importe] = ?, [Quien_paga_rentas] = ?, [Monto_unico_agua_e_imp] = ?, [Mes_Expensa] = ?, [Monto_Expensa] = ?, [Adicional_pagares] = ?, [Cuenta_y_orden] = ?, [Libre] = ?, [catastro] = ?, [rentas] = ?, [Aguas_cordobesas] = ?, [conceptos_incluidos] = ?, [Paga_x_transf] = ?, [URL_Aguas_Cbesas] = ?) WHERE [Inquilino] = ?", clientes[index_seleccionado][0], clientes[index_seleccionado][1], clientes[index_seleccionado][2], clientes[index_seleccionado][3], clientes[index_seleccionado][4], clientes[index_seleccionado][5], fecha_inicio, fecha_final, clientes[index_seleccionado][8], clientes[index_seleccionado][9], clientes[index_seleccionado][10], clientes[index_seleccionado][11], clientes[index_seleccionado][12], clientes[index_seleccionado][13], clientes[index_seleccionado][14], clientes[index_seleccionado][15], clientes[index_seleccionado][16], clientes[index_seleccionado][17], clientes[index_seleccionado][18], clientes[index_seleccionado][19], clientes[index_seleccionado][21], clientes[index_seleccionado][22], clientes[index_seleccionado][23], clientes[index_seleccionado][24], clientes[index_seleccionado][25], clientes[index_seleccionado][26], clientes[index_seleccionado][27], clientes[index_seleccionado][28], clientes[index_seleccionado][29], clientes[index_seleccionado][30], clientes[index_seleccionado][31], clientes[index_seleccionado][32], nombre_viejo)
+        conn.commit()
+
+        self.actualizar_nombres_clientes()
+
+        self.mostrar_dialog("Se aplicaron correctamente los cambios.", "Cambios Aplicados")
+
 
     @Slot()
     def cambiar_seleccion(self):
@@ -178,9 +221,10 @@ class Dialog(QDialog, Ui_Dialog):
         self.actualizar_data()
 
     @Slot()
-    def volver_sin_guardar(self):
+    def volver_sin_guardar(self, index):
         dialog.hide()
         self.resetear_campos()
+        window.actualizar_nombres_clientes(index)
         window.show()
 
     @Slot()
@@ -218,6 +262,21 @@ class MainWindow(QMainWindow):
         index_seleccionado = self.ui.cb_seleccionar_cliente.currentIndex() - 1
         print(index_seleccionado)
         self.actualizar_data()
+
+    def actualizar_nombres_clientes(self, index_temp):
+        global index_seleccionado
+
+        print("El index seleccionado es: ", index_temp)
+
+        self.ui.cb_seleccionar_cliente.clear()
+        self.ui.cb_seleccionar_cliente.addItem("Sin Seleccion")
+        self.ui.cb_seleccionar_cliente.model().item(0).setEnabled(False)
+
+        for i in range(len(clientes)):
+            self.ui.cb_seleccionar_cliente.addItem(clientes[i][1])
+
+        self.ui.cb_seleccionar_cliente.setCurrentIndex(index_temp + 1)
+        index_seleccionado = index_temp
 
     def actualizar_data(self):
         self.ui.label_id_cliente.setText(str(clientes[index_seleccionado][0]))
@@ -298,40 +357,37 @@ class MainWindow(QMainWindow):
             driver = webdriver.Chrome()
 
             global index_seleccionado
-            try:
-                    url = clientes[index_seleccionado][32]
-                    print(url)
-                    driver.get(url)
+            url = clientes[index_seleccionado][32]
+            print(url)
+            driver.get(url)
 
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="sUf"]')))   # Espera hasta que se cargue almenos un boton de copiar aviso en la pagina.
-                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="tbl-detalleDeuda"]/tbody[2]')))
-                    text = driver.find_element_by_xpath('//*[@id="tbl-detalleDeuda"]/tbody[2]').text
-                    codigo = driver.find_element_by_xpath('//*[@id="sUf"]').text
-                    
-                    text = text.split()
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="sUf"]')))   # Espera hasta que se cargue almenos un boton de copiar aviso en la pagina.
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="tbl-detalleDeuda"]/tbody[2]')))
+            text = driver.find_element_by_xpath('//*[@id="tbl-detalleDeuda"]/tbody[2]').text
+            codigo = driver.find_element_by_xpath('//*[@id="sUf"]').text
+            
+            text = text.split()
 
-                    while len(text) > 10:
-                        comprobacion = text[1].split('/')
-                        if int(comprobacion[0]) == periodo_deseado:
-                            break
-                        del text[0:10]
-                    
-                        
-                    text[8] = text[8].replace(",", ".")
+            while len(text) > 10:
+                comprobacion = text[1].split('/')
+                if int(comprobacion[0]) == periodo_deseado:
+                    break
+                del text[0:10]
+            
+                
+            text[8] = text[8].replace(",", ".")
 
-                    print(text)
+            print(text)
 
-                    periodo = text[1].split('/')
+            periodo = text[1].split('/')
 
-                    clientes[index_seleccionado][12] = text[8]
-                    clientes[index_seleccionado][11] = periodo[0]
-                    cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", text[8], periodo[0], url)
-                    print("Modificado")
-                    conn.commit()
-                    self.actualizar_data()
-            except:
-                print('Error con el cliente')
-                cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", "0", periodo_deseado, url)
+            clientes[index_seleccionado][12] = text[8]
+            clientes[index_seleccionado][11] = periodo[0]
+            cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ?, [Aguas_cuota] = ? WHERE [URL_Aguas_Cbesas] = ?", text[8], periodo[0], url)
+            print("Modificado")
+            conn.commit()
+            self.actualizar_data()
+
 
             driver.close()
 
