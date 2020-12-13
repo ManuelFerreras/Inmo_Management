@@ -54,6 +54,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.de_final_contrato.setDate(clientes[1][6])
 
         self.cb_seleccionar_cliente.model().item(0).setEnabled(False)
+        self.le_id.setEnabled(False)
         self.cargar_clientes()
 
     def mostrar_dialog(self, mensaje, titulo):
@@ -165,7 +166,6 @@ class Dialog(QDialog, Ui_Dialog):
     def aplicar(self):
         nombre_viejo = clientes[index_seleccionado][1]
 
-        clientes[index_seleccionado][0] = self.le_id.text()
         clientes[index_seleccionado][1] = self.le_nombre.text()
         clientes[index_seleccionado][2] = self.le_domicilio_alquiler.text()
         clientes[index_seleccionado][3] = self.le_numero_telefono.text()
@@ -202,10 +202,39 @@ class Dialog(QDialog, Ui_Dialog):
         fecha_inicio = datetime.datetime(clientes[index_seleccionado][6].year(), clientes[index_seleccionado][6].month(), clientes[index_seleccionado][6].day())
         fecha_final = datetime.datetime(clientes[index_seleccionado][7].year(), clientes[index_seleccionado][7].month(), clientes[index_seleccionado][7].day())
 
-        cursor.execute("UPDATE [Inquilinos] SET [Inquilino] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][1], nombre_viejo)
+        cursor.execute("UPDATE [Inquilinos] SET [Inquilino] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][1], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Domicilio_alquiler] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][2], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Numero_telefono] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][3], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Monto_Alquiler] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][4], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Monto_deposito_numero] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][5], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Fecha_inicio_contrato] = ? WHERE [Inquilino] = ?", fecha_inicio, clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Fecha_fin_contrato] = ? WHERE [Inquilino] = ?", fecha_final, clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Propietario] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][8], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Tipo_comision] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][9], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Monto_comision] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][10], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Aguas_cuota] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][11], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Aguas_Importe] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][12], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Porcentual_agua_e_imp] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][13], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Quien_paga_Agua] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][14], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Muni_Cuota] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][15], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Muni_Importe] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][16], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Quien_paga_Muni] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][17], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Rentas_cuota] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][18], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Rentas_Importe] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][19], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Quien_paga_rentas] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][20], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Monto_unico_agua_e_imp] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][21], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Mes_Expensa] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][22], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Monto_Expensa] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][23], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Adicional_pagares] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][24], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Cuenta_y_orden] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][25], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Libre] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][26], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [catastro] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][27], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [rentas] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][28], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Aguas_cordobesas] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][29], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [conceptos_incluidos] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][30], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Paga_x_transf] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][31], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [URL_Aguas_Cbesas] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][32], clientes[index_seleccionado][0])
 
-
-        #cursor.execute("UPDATE [Inquilinos] SET ([Inquilino_id] = ?, [Inquilino] = ?, [Domicilio_alquiler] = ?, [Numero_telefono], [Monto_Alquiler] = ?, [Monto_deposito_numero] = ?, [Fecha_inicio_contrato] = ?, [Fecha_fin_contrato] = ?, [Propietario] = ?, [Tipo_comision] = ?, [Monto_comision] = ?, [Aguas_cuota] = ?, [Aguas_Importe] = ?, [Porcentual_agua_e_imp] = ?, [Quien_paga_Agua] = ?, [Muni_Cuota] = ?, [Muni_Importe] = ?, [Quien_paga_Muni] = ?, [Rentas_cuota] = ?, [Rentas_Importe] = ?, [Quien_paga_rentas] = ?, [Monto_unico_agua_e_imp] = ?, [Mes_Expensa] = ?, [Monto_Expensa] = ?, [Adicional_pagares] = ?, [Cuenta_y_orden] = ?, [Libre] = ?, [catastro] = ?, [rentas] = ?, [Aguas_cordobesas] = ?, [conceptos_incluidos] = ?, [Paga_x_transf] = ?, [URL_Aguas_Cbesas] = ?) WHERE [Inquilino] = ?", clientes[index_seleccionado][0], clientes[index_seleccionado][1], clientes[index_seleccionado][2], clientes[index_seleccionado][3], clientes[index_seleccionado][4], clientes[index_seleccionado][5], fecha_inicio, fecha_final, clientes[index_seleccionado][8], clientes[index_seleccionado][9], clientes[index_seleccionado][10], clientes[index_seleccionado][11], clientes[index_seleccionado][12], clientes[index_seleccionado][13], clientes[index_seleccionado][14], clientes[index_seleccionado][15], clientes[index_seleccionado][16], clientes[index_seleccionado][17], clientes[index_seleccionado][18], clientes[index_seleccionado][19], clientes[index_seleccionado][21], clientes[index_seleccionado][22], clientes[index_seleccionado][23], clientes[index_seleccionado][24], clientes[index_seleccionado][25], clientes[index_seleccionado][26], clientes[index_seleccionado][27], clientes[index_seleccionado][28], clientes[index_seleccionado][29], clientes[index_seleccionado][30], clientes[index_seleccionado][31], clientes[index_seleccionado][32], nombre_viejo)
         conn.commit()
 
         self.actualizar_nombres_clientes()
