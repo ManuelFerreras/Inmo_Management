@@ -202,7 +202,7 @@ class Dialog(QDialog, Ui_Dialog):
         fecha_inicio = datetime.datetime(clientes[index_seleccionado][6].year(), clientes[index_seleccionado][6].month(), clientes[index_seleccionado][6].day())
         fecha_final = datetime.datetime(clientes[index_seleccionado][7].year(), clientes[index_seleccionado][7].month(), clientes[index_seleccionado][7].day())
 
-        cursor.execute("UPDATE [Inquilinos] SET [Inquilino] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][1], clientes[index_seleccionado][0])
+        cursor.execute("UPDATE [Inquilinos] SET [Inquilino] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][1], "CINALLI Matias G.s")
         cursor.execute("UPDATE [Inquilinos] SET [Domicilio_alquiler] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][2], clientes[index_seleccionado][0])
         cursor.execute("UPDATE [Inquilinos] SET [Numero_telefono] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][3], clientes[index_seleccionado][0])
         cursor.execute("UPDATE [Inquilinos] SET [Monto_Alquiler] = ? WHERE [Inquilino] = ?", clientes[index_seleccionado][4], clientes[index_seleccionado][0])
