@@ -652,6 +652,9 @@ class MainWindow(QMainWindow):
             self.ui.le_periodo_a_buscar.setEnabled(True)
             self.ui.btn_actualizar_agua_todos.setEnabled(True)
 
+        else:
+            print('No ha especificado un periodo a buscar.')
+
     @Slot()
     def salir(self):
         # Sale del programa.
